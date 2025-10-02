@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Contraseñas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Generador de Contraseñas</h1>
+        <form method="POST">
+            <input type="text" name="mascota" placeholder="Nombre de tu mascota" required>
+            <input type="text" name="familia" placeholder="Nombre de un familiar" required>
+            <input type="text" name="edad" placeholder="Tu edad" required>
+            <input type="text" name="ciudad" placeholder="Ciudad de nacimiento" required>
+            <button type="submit">Generar Contraseñas</button>
+        </form>
+    </div>
+</body>
+
+</html>
