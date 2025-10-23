@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo Icono</title>
+    <meta name="description" content="En esta página encontraras documentación sobre HTML">
+    <meta name="keywords" content="html, lenguaje, lenguaje de mercado, código html, etiqueta">
+    <meta name="author" content="Manz">
+    <meta name="application-name" content="ManzDev Skynet">
+    <meta name="generator" content="VSCode">
+    <link rel="icon" sizes="64x64" href="./assets/icons/ICONOINSTAGRAM.png">
+</head>
+<body>
+</body>
+</html>
