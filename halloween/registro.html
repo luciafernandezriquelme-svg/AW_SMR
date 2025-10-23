@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Escape Room Halloween</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #ff7518;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Sangre en los bordes superior e inferior */
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: radial-gradient(circle at center, #8b0000 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        body::before {
+            top: 0;
+        }
+
+        body::after {
+            bottom: 0;
+        }
+
+        h1 {
+            font-family: 'Creepster', cursive;
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #ff0000;
+            text-shadow: 2px 2px #000;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #accessBtn {
+            padding: 12px 30px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 20px;
+            font-family: 'Creepster', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        #accessBtn:hover {
+            background-color: #990000;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px red;
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .error {
+            color: #ff4444;
+            margin-top: 10px;
+        }
+
+        #screamer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: flash 0.3s ease-in-out;
+        }
+
+        #screamer img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #screamerText {
+            color: red;
+            font-size: 40px;
+            font-family: 'Creepster', cursive;
+            margin-top: 20px;
+            text-shadow: 2px 2px black;
+        }
+
+        @keyframes flash {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        /* 🔪 Cuchillo animado */
+        #cuchillo {
+            position: fixed;
+            top: 100px;
+            right: 0;
+            width: 200px;
+            z-index: 5;
+            pointer-events: none;
+            animation: apuñalar 1.5s infinite;
+        }
+
+        @keyframes apuñalar {
+            0% {
+                transform: rotate(0deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(-20deg) translateY(20px);
+            }
+
+            100% {
+                transform: rotate(0deg) translateY(0);
+            }
+        }
+
+        /* 🩸 Gotas de sangre */
+        .sangre {
+            position: fixed;
+            top: 220px;
+            right: 80px;
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+            animation: caer 2s infinite;
+            z-index: 4;
+            opacity: 0.8;
+        }
+
+        .sangre.delay1 {
+            animation-delay: 0.5s;
+        }
+
+        .sangre.delay2 {
+            animation-delay: 1s;
+        }
+
+        .sangre.delay3 {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes caer {
+            0% {
+                top: 220px;
+                opacity: 1;
+            }
+
+            100% {
+                top: 600px;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>¡Bienvenido al Escape Room!</h1>
+    <div class="form-container">
+        <form id="accessForm">
+            <input type="text" id="nombre" placeholder="Tu nombre" required><br>
+            <input type="password" id="clave" placeholder="Palabra secreta" required><br>
+            <button id="accessBtn" type="submit">Abrir la cripta</button>
+            <div class="error" id="errorMsg"></div>
+        </form>
+    </div>
+
+    <!-- 🔪 Cuchillo y sangre -->
+    <img id="cuchillo" src="Halloween.png" alt="Cuchillo animado">
+    <div class="sangre"></div>
+    <div class="sangre delay1"></div>
+    <div class="sangre delay2"></div>
+    <div class="sangre delay3"></div>
+
+    <!-- 😱 Imagen de susto -->
+    <div id="screamer">
+        <img src="la niña del exorcista.png" alt="¡Boo!">
+        <div id="screamerText">⚠️ ERROR: ¡Contraseña incorrecta! ⚠️</div>
+    </div>
+
+    <!-- 🎵 Música de fondo -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source
+            src="scary-music-box-165983.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <!-- 🔊 Sonido de clic -->
+    <audio id="clickSound" preload="auto">
+        <source src="computer-mouse-click-351398.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 😱 Sonido de susto -->
+    <audio id="screamSound" preload="auto">
+        <source src="grito.mp3.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const form = document.getElementById('accessForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const screamer = document.getElementById('screamer');
+        const screamSound = document.getElementById('screamSound');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const clickSound = document.getElementById('clickSound');
+
+        // Activar música de fondo con el primer clic
+        document.addEventListener('click', () => {
+            backgroundMusic.play().catch(() => {
+                console.log("Autoplay bloqueado por el navegador.");
+            });
+        }, { once: true });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value.trim();
+            const clave = document.getElementById('clave').value.trim();
+
+            clickSound.play();
+
+            if (clave.toLowerCase() === "terror" && nombre !== "") {
+                window.location.href = "https://view.genial.ly/tu-enlace-genially"; // Reemplaza con tu enlace
+            } else {
+                errorMsg.textContent = "";
+                backgroundMusic.pause();
+                backgroundMusic.currentTime = 0;
+                screamer.style.display = "flex";
+                screamSound.play();
+                setTimeout(() => {
+                    screamer.style.display = "none";
+                    backgroundMusic.play();
+                }, 8000);
+            }
+        });
+    </script>
+</body>
+</html>
