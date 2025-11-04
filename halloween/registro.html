@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>Escape Room Halloween</title>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #000;
             color: #ff7518;
             font-family: 'Arial', sans-serif;
             text-align: center;
-            padding-top: 100px;
+            padding-top: 10vh;
             position: relative;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Sangre en los bordes superior e inferior */
         body::before,
         body::after {
             content: "";
@@ -38,7 +41,7 @@
 
         h1 {
             font-family: 'Creepster', cursive;
-            font-size: 60px;
+            font-size: 6vw;
             margin-bottom: 20px;
             color: #ff0000;
             text-shadow: 2px 2px #000;
@@ -53,13 +56,15 @@
             display: inline-block;
             position: relative;
             z-index: 2;
+            max-width: 500px;
+            width: 90%;
+            margin: auto;
         }
 
-        input[type="text"],
         input[type="password"] {
             padding: 10px;
             margin: 10px;
-            width: 250px;
+            width: 100%;
             border: none;
             border-radius: 5px;
             font-size: 16px;
@@ -146,7 +151,6 @@
             }
         }
 
-        /* 🔪 Cuchillo animado */
         #cuchillo {
             position: fixed;
             top: 100px;
@@ -171,7 +175,6 @@
             }
         }
 
-        /* 🩸 Gotas de sangre */
         .sangre {
             position: fixed;
             top: 220px;
@@ -208,48 +211,49 @@
                 opacity: 0;
             }
         }
+
+        @media screen and (min-width: 1200px) {
+            h1 {
+                font-size: 70px;
+            }
+
+            #cuchillo {
+                width: 250px;
+            }
+        }
     </style>
 </head>
-
 <body>
     <h1>¡Bienvenido al Escape Room!</h1>
     <div class="form-container">
         <form id="accessForm">
-            <input type="text" id="nombre" placeholder="Tu nombre" required><br>
             <input type="password" id="clave" placeholder="Palabra secreta" required><br>
             <button id="accessBtn" type="submit">Abrir la cripta</button>
             <div class="error" id="errorMsg"></div>
         </form>
     </div>
 
-    <!-- 🔪 Cuchillo y sangre -->
     <img id="cuchillo" src="Halloween.png" alt="Cuchillo animado">
     <div class="sangre"></div>
     <div class="sangre delay1"></div>
     <div class="sangre delay2"></div>
     <div class="sangre delay3"></div>
 
-    <!-- 😱 Imagen de susto -->
     <div id="screamer">
-        <img src="la niña del exorcista.png" alt="¡Boo!">
+        <img src="foto sam.png" width="800" height="800" alt="¡Boo!">
         <div id="screamerText">⚠️ ERROR: ¡Contraseña incorrecta! ⚠️</div>
     </div>
 
-    <!-- 🎵 Música de fondo -->
     <audio id="backgroundMusic" autoplay loop>
-        <source
-            src="scary-music-box-165983.mp3"
-            type="audio/mpeg">
+        <source src="scary-music-box-165983.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 🔊 Sonido de clic -->
     <audio id="clickSound" preload="auto">
         <source src="computer-mouse-click-351398.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 😱 Sonido de susto -->
     <audio id="screamSound" preload="auto">
-        <source src="grito.mp3.mp3" type="audio/mpeg">
+        <source src="GRITOALTOO.MP3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -260,7 +264,6 @@
         const backgroundMusic = document.getElementById('backgroundMusic');
         const clickSound = document.getElementById('clickSound');
 
-        // Activar música de fondo con el primer clic
         document.addEventListener('click', () => {
             backgroundMusic.play().catch(() => {
                 console.log("Autoplay bloqueado por el navegador.");
@@ -269,24 +272,43 @@
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            const nombre = document.getElementById('nombre').value.trim();
-            const clave = document.getElementById('clave').value.trim();
+            const clave = document.getElementById('clave').value.trim().toLowerCase();
 
             clickSound.play();
 
-            if (clave.toLowerCase() === "terror" && nombre !== "") {
-                window.location.href = "https://view.genial.ly/tu-enlace-genially"; // Reemplaza con tu enlace
+            if (clave === "boo") {
+                alert("¡Se abrirá la cripta! Asegúrate de activar el audio en la nueva página.");
+                window.location.href = "https://view.genially.com/68fa6783c97c25f50085ee5f/interactive-content-escape-room-terror";
             } else {
-                errorMsg.textContent = "";
+                errorMsg.textContent = "*";
                 backgroundMusic.pause();
                 backgroundMusic.currentTime = 0;
-                screamer.style.display = "flex";
-                screamSound.play();
-                setTimeout(() => {
+                screamSound.currentTime = 0;
+
+                // Mostrar imagen justo cuando el audio comienza
+                screamSound.onplay = () => {
+                    screamer.style.display = "flex";
+                };
+
+                // Ocultar imagen cuando el audio termina
+                screamSound.onended = () => {
                     screamer.style.display = "none";
-                    backgroundMusic.play();
-                }, 8000);
+                    backgroundMusic.play().catch(() => {
+                        console.log("Fallback por si no se puede reproducir");
+                    });
+                };
+
+                // Reproducir el sonido
+                screamSound.play().catch(() => {
+                    // Si el navegador bloquea el audio, mostrar imagen como respaldo
+                    screamer.style.display = "flex";
+                    setTimeout(() => {
+                        screamer.style.display = "none";
+                        backgroundMusic.play();
+                    }, 8000); // Duración estimada del grito
+                });
             }
+
         });
     </script>
 </body>

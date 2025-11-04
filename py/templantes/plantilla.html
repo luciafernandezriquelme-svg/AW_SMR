@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Contraseñas</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: { fuente }, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .formulario {
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(6px);
+            border-radius: 20px;
+            padding: 2.5em 2em;
+            max-width: 420px;
+            width: 100%;
+            margin: 2em auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5em;
+            font-size: 2em;
+            letter-spacing: 1px;
+            color: #ffd700;
+            text-shadow: 1px 1px 8px #222;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 0.3em;
+            color: #ffd700;
+        }
+        input, select {
+            display: block;
+            margin-bottom: 1.2em;
+            width: 100%;
+            padding: 0.7em;
+            border-radius: 8px;
+            border: none;
+            font-size: 1em;
+            background: rgba(255,255,255,0.15);
+            color: #222;
+        }
+        input[type="color"] {
+            padding: 0.2em;
+            height: 2.5em;
+        }
+        button {
+            background: linear-gradient(90deg, #ffd700 0%, #ff9800 100%);
+            color: #222;
+            border: none;
+            padding: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #ff9800 0%, #ffd700 100%);
+        }
+        .resultado {
+            margin-top: 2em;
+            background: rgba(255,255,255,0.15);
+            padding: 1.5em;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            color: #fff;
+        }
+        .resultado ul {
+            padding-left: 1.2em;
+        }
+        .resultado li {
+            font-size: 1.1em;
+            margin-bottom: 0.5em;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+            padding: 0.4em 0.8em;
+            color: #ffd700;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="formulario">
+        <h2>Generador de Contraseñas Seguras</h2>
+        <form method="POST">
+            <label for="dni">DNI:</label>
+            <input type="text" id="dni" name="dni" required>
+
+            <label for="mascota">Nombre de tu mascota:</label>
+            <input type="text" id="mascota" name="mascota" required>
+
+            <label for="hijos">Nombre de tus hijos (puedes poner varios juntos):</label>
+            <input type="text" id="hijos" name="hijos">
+
+            <label for="nombre">Tu nombre:</label>
+            <input type="text" id="nombre" name="nombre">
+
+            <label for="hobies">Tus hobies:</label>
+            <input type="text" id="hobies" name="hobies">
+
+            <label for="padres">Nombre de tus padres:</label>
+            <input type="text" id="padres" name="padres">
+
+            <label for="color">Color de fondo:</label>
+            <input type="color" id="color" name="color" value="{{ color }}">
+
+            <label for="fuente">Tipo de letra:</label>
+            <select id="fuente" name="fuente">
+                <option value="Arial" {% if fuente = 'Arial' %}selected{% endif %}>Arial</option>
+                <option value="Verdana" {% if fuente = 'Verdana' %}selected{% endif %}>Verdana</option>
+                <option value="Courier New" {% if fuente = 'Courier New' %}selected{% endif %}>Courier New</option>
+                <option value="Georgia" {% if fuente = 'Georgia' %}selected{% endif %}>Georgia</option>
+                <option value="Times New Roman" {% if fuente = 'Times New Roman' %}selected{% endif %}>Times New Roman</option>
+            </select>
+
+            <button type="submit">Crear contraseña</button>
+        </form>
+        {% if contraseñas %}
+        <div class="resultado">
+            <strong>Tus contraseñas generadas son:</strong>
+            <ul>
+            {% for c in contraseñas %}
+                <li>{{ c }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

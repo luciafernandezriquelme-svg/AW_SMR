@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comando Contraseña</title>
+    <style>
+        body {
+            background: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 2em;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: rgba(0,0,0,0.2);
+            padding: 2em;
+            border-radius: 10px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .resultado {
+            margin-top: 2em;
+            background: #333;
+            padding: 1em;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Comando Contraseña</h2>
+        <form method="POST">
+            <label for="comando">Comando contraseña:</label>
+            <input type="text" id="comando" name="comando" required>
+            <button type="submit">Generar</button>
+        </form>
+        <!-- Aquí se mostrará el resultado si lo usas con Flask -->
+        {% if contraseña %}
+        <div class="resultado">
+            <strong>Contraseña generada:</strong>
+            <p>{{ contraseña }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

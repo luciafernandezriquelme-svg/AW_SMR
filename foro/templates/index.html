@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Foro Informático</title>
+</head>
+<body>
+    <h1>Temas del foro</h1>
+    <ul>
+        {% for tema in temas %}
+        <li><strong>{{ tema[1] }}</strong> por {{ tema[3] }}<br>{{ tema[2] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Crear nuevo tema</h2>
+    <form action="/crear-tema" method="post">
+        <input type="text" name="titulo" placeholder="Título"><br>
+        <textarea name="contenido" placeholder="Contenido"></textarea><br>
+        <button type="submit">Publicar</button>
+    </form>
+</body>
+</html>

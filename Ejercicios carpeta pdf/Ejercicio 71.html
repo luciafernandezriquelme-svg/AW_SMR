@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicio de Listas Variadas</title>
+  <style>
+    /* Lista sin viñetas */
+    .sin-grafico {
+      list-style-type: none;
+    }
+
+    /* Lista con círculos */
+    .circulos {
+      list-style-type: circle;
+    }
+
+    /* Lista con cuadrados */
+    .cuadrados {
+      list-style-type: square;
+    }
+
+    /* Lista con letras griegas simuladas */
+    .griegas li::before {
+      content: counter(griego, lower-greek) ". ";
+      counter-increment: griego;
+      margin-right: 5px;
+    }
+    .griegas {
+      list-style: none;
+      counter-reset: griego;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Lista sin elemento gráfico:</h2>
+  <ul class="sin-grafico">
+    <li>Elemento 1</li>
+    <li>Elemento 2</li>
+    <li>Elemento 3</li>
+  </ul>
+
+  <h2>Lista con círculos:</h2>
+  <ul class="circulos">
+    <li>Elemento 1</li>
+    <li>Elemento 2</li>
+    <li>Elemento 3</li>
+  </ul>
+
+  <h2>Lista con cuadrados:</h2>
+  <ul class="cuadrados">
+    <li>Elemento 1</li>
+    <li>Elemento 2</li>
+    <li>Elemento 3</li>
+  </ul>
+
+  <h2>Lista con números romanos:</h2>
+  <ol type="i">
+    <li>Elemento 1</li>
+    <li>Elemento 2</li>
+    <li>Elemento 3</li>
+  </ol>
+
+  <h2>Lista con letras griegas:</h2>
+  <ul class="griegas">
+    <li>Elemento 1</li>
+    <li>Elemento 2</li>
+    <li>Elemento 3</li>
+  </ul>
+
+</body>
+</html>
